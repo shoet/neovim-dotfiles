@@ -19,13 +19,9 @@ local on_attach = function(client, bufnr)
 	--Enable completion triggered by <c-x><c-o>
 	-- buf_set_option("omnifunc", "v:lua.vim.lsp.omnifunc")
 
-	-- Mappings.
-	local opts = { noremap = true, silent = true }
-
 	-- See `:help vim.lsp.*` for documentation on any of the below functions
 	-- buf_set_keymap("n", "gd", "<Cmd>lua vim.lsp.buf.declaration()<CR>", opts)
-	-- buf_set_keymap("n", "gi", "<cmd>lua vim.lsp.buf.implementation()<CR>", opts)
-	-- Lspsaga の方を使うのでここはコメントアウト
+	-- buf_set_keymap("n", "<leader>gd", "<cmd>lua vim.lsp.buf.implementation()<CR>", opts)
 	--buf_set_keymap("n", "ga", "<cmd>lua vim.lsp.buf.code_action()<CR>", opts)
 
 	-- formatting
@@ -42,6 +38,11 @@ local on_attach = function(client, bufnr)
 	-- To send formatted stream to null-ls
 	--client.resolved_capabilities.document_formatting = false
 end
+
+-- Mappings.
+local opts = { noremap = true, silent = true }
+
+vim.keymap.set("n", "gi", "<Cmd>lua vim.lsp.buf.implementation()<CR>", opts)
 
 protocol.CompletionItemKind = {
 	"", -- Text
@@ -161,6 +162,18 @@ nvim_lsp.gopls.setup({
 		vim.api.nvim_command([[ autocmd BufWritePre <buffer> lua vim.lsp.buf.format(nil, 1000) ]])
 	end,
 })
+
+nvim_lsp.sqlls.setup({
+	on_attach = function(client)
+		client.server_capabilities.document_formatting = true
+		vim.cmd([[ setlocal noexpandtab ]])
+		vim.cmd([[ setlocal tabstop=4 ]])
+		vim.cmd([[ setlocal shiftwidth=4 ]])
+		vim.api.nvim_command([[ autocmd BufWritePre <buffer> lua vim.lsp.buf.format(nil, 1000) ]])
+	end,
+})
+
+nvim_lsp.phpactor.setup({})
 
 vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
 	underline = true,

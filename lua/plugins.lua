@@ -46,11 +46,6 @@ return packer.startup(function(use)
 	use({ "nvim-lua/plenary.nvim" }) -- Common utilities
 
 	-- UI
-	-- use({ "EdenEast/nightfox.nvim" })  -- Color scheme
-	-- use({
-	-- 	"svrana/neosolarized.nvim",
-	-- 	requires = { "tjdevries/colorbuddy.nvim" },
-	-- })
 	use({
 		"ribru17/bamboo.nvim",
 		lazy = false,
@@ -64,6 +59,7 @@ return packer.startup(function(use)
 			require("bamboo").load()
 		end,
 	})
+	use({ "folke/tokyonight.nvim" })
 	use({ "norcalli/nvim-colorizer.lua" }) -- Zen mode
 	use({ "folke/zen-mode.nvim" }) -- Zen mode
 	use({ "akinsho/toggleterm.nvim" }) -- Toogle item
@@ -74,6 +70,10 @@ return packer.startup(function(use)
 	use({ "kyazdani42/nvim-web-devicons" }) -- File icons
 	use({ "akinsho/bufferline.nvim" })
 	use({ "nvim-tree/nvim-tree.lua" })
+
+	-- scrollbar
+	use({ "petertriho/nvim-scrollbar" }) -- requirements: nvim-highlite, gitsigns
+	use({ "kevinhwang91/nvim-hlslens" })
 
 	-- cmp plugins
 	use({ "hrsh7th/nvim-cmp" }) -- The completion plugin

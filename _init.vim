@@ -1,1 +1,0 @@
-/Users/kawasatoshouetsu/.vimrc
